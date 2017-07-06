@@ -1,0 +1,6 @@
+galaxy_info:
+  author: Àlex Pérez-Pujol Gonzalez
+  description: Install files from maven
+  license: gpl3
+  min_ansible_version: 2.3
+  galaxy_tags: []
