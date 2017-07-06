@@ -1,3 +1,4 @@
 ---
 # defaults file for install-from-maven
 file_url:
+deploy_dir:

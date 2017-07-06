@@ -13,10 +13,11 @@ Role Variables
 Example Playbook
 ----------------
 
+```yaml
     - hosts: servers
       roles:
          - { role: install-from-maven, file_url: https://repo1.maven.org/maven2/org/blablabla.war }
-
+```
 License
 -------
 
