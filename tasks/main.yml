@@ -1,0 +1,29 @@
+---
+# tasks file for install-from-maven
+- name: Set md5sum file name
+  set_fact:
+    file_md5: "/tmp/install-from-maven-file_md5"
+
+- name: Download md5sum
+  get_url:
+    url: "{{ file_url }}.md5"
+    dest: "{{ file_md5 }}"
+
+- name: Read md5sum
+  shell: "cat {{ file_md5 }}"
+  register: file_sum
+
+- name: Asign it to a variable
+  set_fact:
+    file_sum: "md5:{{ file_sum.stdout }}"
+
+- name: Download file
+  get_url:
+    url: "{{ file_url }}"
+    dest: "{{ deploy_dir }}"
+    checksum: "{{ file_sum }}"
+
+- name: Delete sum
+  file:
+    path: "{{ file_md5 }}"
+    state: absent
