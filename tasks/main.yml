@@ -1,0 +1,26 @@
+---
+# tasks file for install-from-maven
+- name: Set md5sum file name
+  command:
+    args: "mktemp install-from-maven.XXXXXXXX"
+  register: temp_file
+
+- name: Download md5sum
+  get_url:
+    url: "{{ file_url }}.md5"
+    dest: "{{ temp_file }}"
+
+- name: Read md5sum
+  shell: "cat {{ temp_file }}"
+  register: file_sum
+
+- name: Download file
+  get_url:
+    url: "{{ file_url }}"
+    dest: "{{ deploy_dir }}"
+    checksum: "{{ file_sum.stdout }}"
+
+- name: Delete sum
+  file:
+    path: "{{ temp_file }}"
+    state: absent
