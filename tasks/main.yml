@@ -1,17 +1,16 @@
 ---
 # tasks file for install-from-maven
 - name: Set md5sum file name
-  command:
-    args: "mktemp install-from-maven.XXXXXXXX"
+  shell: "mktemp /tmp/install-from-maven.XXXXXXXX"
   register: temp_file
 
 - name: Download md5sum
   get_url:
     url: "{{ file_url }}.md5"
-    dest: "{{ temp_file }}"
+    dest: "{{ temp_file.stdout }}"
 
 - name: Read md5sum
-  shell: "cat {{ temp_file }}"
+  shell: "cat {{ temp_file.stdout }}"
   register: file_sum
 
 - name: Download file
